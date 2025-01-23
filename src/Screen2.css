@@ -1,0 +1,201 @@
+/* Parent container */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+     /* Set a default font */
+}
+
+.screen2-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw; /* Full viewport width */
+    background-color: #000220; /* Royal Blue */
+    color: #f5f5f5; /* Light gray for text */
+}
+
+/* Left section for text */
+.text-section {
+    flex: 1; /* Take up 50% of the screen width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 70px;
+    padding: 2rem; /* Add padding for spacing */
+}
+
+.heading {
+    font-size: 2.5rem; /* Large heading font size */
+    font-weight: bold;
+    color: #ffd700; /* Golden yellow for the heading */
+    margin-bottom: 1rem;
+}
+
+/* Question text with typing animation */
+.question {
+    font-size: 1.2rem; /* Regular font size for the question */
+    color: rgba(245, 245, 245, 0.9); /* Slightly opaque text */
+    line-height: 1.6; /* Increase line spacing for readability */
+    background-color: rgba(0, 0, 0, 0.4); /* Transparent gray background */
+    padding: 1rem; /* Padding inside the box for better spacing */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    overflow: hidden; /* Hide overflowing text */
+    white-space: nowrap; /* Prevent text from wrapping */
+    border-right: 3px solid #ffd700; /* Simulated cursor */
+    animation: typing 4s steps(40, end), blink 0.7s step-end infinite;
+  
+}
+
+/* Keyframes for typing animation */
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/* Keyframes for blinking cursor */
+@keyframes blink {
+    from {
+        border-color: #ffd700;
+    }
+    to {
+        border-color: transparent;
+    }
+}
+
+/* Right section for the rotating image */
+.rotating-image-container {
+    /* Take up 50% of the screen width */
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: 80vh;
+}
+
+.rotating-image {
+    width: 300px;
+    height: 300px;
+    animation: rotate 5s linear infinite; /* Rotate every 5 seconds */
+}
+
+/* Keyframes for rotation animation */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Options container */
+.options-container {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two options per row */
+    gap: 1rem; /* Spacing between options */
+}
+
+/* Option button */
+.option-button {
+    background-color: #333; /* Dark gray background */
+    color: #f5f5f5; /* Light gray text */
+    padding: 0.8rem 1.5rem;
+    border: 2px solid #f5f5f5;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.option-button:hover {
+    background-color: #ffd700; /* Golden yellow on hover */
+    color: #000; /* Black text */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.option-button.correct {
+    background-color: #4caf50; /* Green for correct answer */
+    border-color: #4caf50;
+    color: #fff;
+}
+
+.option-button.incorrect {
+    background-color: #f44336; /* Red for incorrect answer */
+    border-color: #f44336;
+    color: #fff;
+}
+
+/* Result message */
+.result {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.result.correct {
+    color: #4caf50; /* Green for correct answer */
+}
+
+.result.incorrect {
+    color: #f44336; /* Red for incorrect answer */
+}
+
+
+
+
+
+
+
+
+
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: red;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .modal button:hover {
+    background-color: #0056b3;
+  }
+
+  modalButton{
+    margin: 7 !important; 
+    padding: 5;
+  }
+  

@@ -1,0 +1,117 @@
+body {
+    background-color: #000220;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    height: 150vh; /* Adjusted to fit the viewport */
+    color: #ffffff; /* Ensures text contrasts with the background */
+    font-family: Arial, sans-serif; /* Optional: Better typography */
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Ensure responsiveness on smaller screens */
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px; /* Added padding for better spacing */
+    box-sizing: border-box;
+    height: auto;
+}
+
+.question {
+    flex: 1; /* Take equal space with table-wrapper */
+    padding: 20px;
+    background-color: #121232;
+    border-right: 2px solid #444;
+    box-sizing: border-box;
+    max-height: 70vh; /* Limit height to prevent overflow */
+    overflow-y: auto; /* Scrollable content if it overflows */
+    border-radius: 10px; /* Added rounded corners */
+    margin-right: 10px;
+}
+
+.table-wrapper {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #1a1a40; /* Subtle contrast for table section */
+    border-radius: 10px; /* Rounded corners */
+    height: 100vh; /* Prevent overflow */
+    overflow-y: auto; /* Enable scrolling if needed */
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    width: 100%;
+    gap: 10px; /* Add spacing between buttons */
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #cc7722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    z-index: 3;
+    margin-bottom: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #3333cc; /* Darker blue on hover */
+}
+
+.table {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Full width within its container */
+}
+
+.rotating-image-container {
+    position: relative;
+    width: 250px; /* Reduced size for better layout */
+    height: 250px;
+    margin: -130px auto; /* Center image container */
+}
+
+.rotating-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%; 
+    margin-top: 60%;
+    margin-right: -20%;/* Circular image */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Subtle shadow effect */
+}
+
+.tableoptions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Four zones per row */
+    gap: 15px; /* Increased gap for better spacing */
+    margin-top: 20px;
+    width: 100%; /* Full width for table zones */
+}
+
+.tableoptions div {
+    background-color: #2a2a6c; /* Zone background color */
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tableoptions div:hover {
+    background-color: #4444ff; /* Highlight zone on hover */
+}
