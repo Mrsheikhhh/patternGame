@@ -10,6 +10,9 @@ export default function TableSide2({ index, tableKey, currentText, acceptDrop })
     const radius = 130; // Radius of the circular table
     const center = 50;
 
+    // Labels for each side
+    const positionLabels = ["First Side", "Second Side", "Third Side"];
+
     return (
         <div
             ref={dropRef}
@@ -21,17 +24,23 @@ export default function TableSide2({ index, tableKey, currentText, acceptDrop })
                 left: `calc(${center}% + ${radius * Math.cos((index * 120 * Math.PI) / 180)}px)`,
                 border: '2px dashed #aaa',
                 borderRadius: '50%',
-                backgroundColor: '#f0f0f0',
+                background: 'linear-gradient(312deg, rgba(0,27,84,1) 0%, rgba(115,134,255,1) 100%)',
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                fontSize: '18px',
+                fontSize: '14px',
                 fontWeight: 'bold',
                 marginTop: '80px',
                 color: '#000220',
+                textAlign: 'center',
+                padding: '5px',
             }}
         >
-            {currentText}
+            <div>{currentText}</div>
+            <div style={{ fontSize: '12px', fontWeight: 'normal', marginTop: '30px',backgroundColor:'white',color:'black' }}>
+                {positionLabels[index] || `Side ${index + 1}`}
+            </div>
         </div>
     );
 }

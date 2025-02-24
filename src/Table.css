@@ -1,5 +1,6 @@
 body {
-    background-color: #000220;
+    background: rgb(0,27,84);
+    background: linear-gradient(312deg, rgba(0,27,84,1) 0%, rgba(115,134,255,1) 100%);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -23,7 +24,8 @@ body {
 .question {
     flex: 1; /* Take equal space with table-wrapper */
     padding: 20px;
-    background-color: #121232;
+    background: rgb(0,27,84);
+    background: linear-gradient(312deg, rgba(0,27,84,1) 0%, rgba(115,134,255,1) 100%);
     border-right: 2px solid #444;
     box-sizing: border-box;
     max-height: 70vh; /* Limit height to prevent overflow */
@@ -40,9 +42,10 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-color: #1a1a40; /* Subtle contrast for table section */
+    background: rgb(254,255,2);
+    background: linear-gradient(312deg, rgba(254,255,2,1) 0%, rgba(255,191,10,1) 16%, rgba(255,191,10,1) 100%);
     border-radius: 10px; /* Rounded corners */
-    height: 100vh; /* Prevent overflow */
+    height: 130vh; /* Prevent overflow */
     overflow-y: auto; /* Enable scrolling if needed */
 }
 
@@ -56,7 +59,8 @@ body {
 
 button {
     padding: 10px 15px;
-    background-color: #cc7722;
+    background: rgb(0,27,84);
+    background: linear-gradient(312deg, rgba(0,27,84,1) 0%, rgba(115,134,255,1) 100%);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -67,7 +71,8 @@ button {
 }
 
 button:hover {
-    background-color: #3333cc; /* Darker blue on hover */
+    background-color: #121232;
+    color: white; /* Darker blue on hover */
 }
 
 .table {
@@ -85,16 +90,24 @@ button:hover {
     margin: -130px auto; /* Center image container */
 }
 
-.rotating-image {
-    width: 100%;
-    height: 100%;
+.rotating-image-1 {
+    width: 300px;
+    height: 300px;
     object-fit: cover;
     border-radius: 50%; 
     margin-top: 60%;
     margin-right: -20%;/* Circular image */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Subtle shadow effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    animation: rotate 5s linear infinite; /* Subtle shadow effect */
 }
-
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
 .tableoptions {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Four zones per row */

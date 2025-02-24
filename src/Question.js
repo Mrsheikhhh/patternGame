@@ -54,56 +54,7 @@ const levels = [
       },
     ],
   },
-  {
-    category: "Medium",
-    questions: [
-      {
-        level: "Medium",
-        question: "In how many ways can 4 people be arranged around a round table such that A always sits next to B?",
-        constraints: ["A next to B"],
-        options: ["12 ways", "24 ways", "6 ways", "120 ways"],
-        output: "12 ways",
-        solution: "Treat A and B as a single block, so total permutations = 3! * 2!",
-        explanation: "Treat A and B as a single block, reducing the problem to arranging 3 units (A+B block and 2 other people). Then, A and B can be arranged in 2 ways within the block, leading to a total of 3! * 2! = 12."
-      },
-      {
-        level: "Medium",
-        question: "In how many ways can 5 people be seated such that A is always at the head of the table?",
-        constraints: ["A at head of table"],
-        options: ["24 ways", "120 ways", "12 ways", "720 ways"],
-        output: "24 ways",
-        solution: "Fix A in one position and arrange the rest: (n-1)!",
-        explanation: "Since A is fixed at the head of the table, we only need to arrange the remaining 4 people, which is (4!) = 24 ways."
-      },
-      {
-        level: "Medium",
-        question: "In how many ways can 6 people be seated if B and C cannot sit next to each other?",
-        constraints: ["B not next to C"],
-        options: ["480 ways", "600 ways", "720 ways", "360 ways"],
-        output: "480 ways",
-        solution: "Find total arrangements (5!) and subtract invalid ones.",
-        explanation: "First, calculate the total number of arrangements for 6 people, which is 6!. Then, subtract the invalid cases where B and C are seated together (treat B and C as a block). This gives us 6! - 5! = 480 ways."
-      },
-      {
-        level: "Medium",
-        question: "How many permutations of 'BANANA' exist where no two A's are adjacent?",
-        constraints: ["No adjacent A's"],
-        options: ["Dynamic", "720 ways", "60 ways", "120 ways"],
-        output: "Dynamic",
-        solution: "Use gap filling between other letters to space A's correctly.",
-        explanation: "To ensure no two A's are adjacent, we can first arrange the remaining letters (B, N, N, A) and then place the A's in the gaps between these letters."
-      },
-      {
-        level: "Medium",
-        question: "How many ways can a group of 6 people be split into two teams of 3?",
-        constraints: ["Teams of equal size"],
-        options: ["20 ways", "15 ways", "30 ways", "10 ways"],
-        output: "20 ways",
-        solution: "Use combinations: C(6,3)/2!",
-        explanation: "The number of ways to split 6 people into two teams of 3 is given by the combination C(6, 3). However, we divide by 2! to account for the fact that the teams are unordered."
-      },
-    ],
-  },
+ 
   {
     category: "Hard",
   
@@ -111,106 +62,123 @@ const levels = [
       {
         level: "Hard",
         id: '1',
-        question: "Arrange A, B, C, D, E, F such that A sits next to B, C sits next to D, and E is not next to F.",
+        question: "Arrange according to given constraints",
         inputs: ["A", "B", "C", "D", "E", "F","G","H"],
         constraints: [
-          "A next to B",
-          "C next to D",
-          "E not next to F",
+          "A must sit next to B",
+          "C cannot sit next to D",
+          "E must sit between F and G",
+          "H cannot sit next to A or B",
+
         ],
-        output: ["A", "B", "C", "D", "E", "F","G","H"], // Example: One valid solution, can be dynamic
-        solution: ["A", "B", "C", "D", "E", "F","G","H"], // Same as output for validation
+        output: ["A", "B", "E", "F", "G", "C", "D", "H"], // Example
+        solution: ["A", "B", "E", "F", "G", "C", "D", "H"], // Example
+
         explanation: "This is a complex problem involving multiple constraints. We must account for the adjacency of A and B, C and D, and ensure that E and F are not adjacent."
       },
       {
-        level: "Hard",
-        id: '2',
-        question: "Arrange A, B, C, D, E, F, G such that A sits next to B and C, D is opposite F, and G is not next to E.",
-        inputs: ["A", "B", "C", "D", "E", "F", "G"],
-        constraints: [
-          "A next to B",
-          "A next to C",
-          "D opposite F",
-          "G not next to E",
+        "level": "Medium",
+        "id": "3",
+        "question": "Arrange according to given constraints",
+        "inputs": ["A", "B", "C", "D", "E", "F", "G", "H"],
+        "constraints": [
+          "A and B must sit together",
+          "C must not be adjacent to D",
+          "E must be in the last position",
+          "F must be next to G"
         ],
-        output: ["A", "B", "C", "G", "E", "F", "D"], // Example: One valid solution, can be dynamic
-        solution: ["A", "B", "C", "G", "E", "F", "D"], // Same as output for validation
-        explanation: "This problem requires satisfying multiple conditions, such as A being adjacent to both B and C, D being opposite F, and G not being adjacent to E. A dynamic approach is needed to find the correct arrangement."
+        "output": ["A", "B", "F", "G", "D", "C", "H", "E"],
+        "solution": ["A", "B", "F", "G", "D", "C", "H", "E"],
+        "explanation": "We start by placing A and B together as required. Next, F must be next to G, so we place them together. Since C must not be adjacent to D, we ensure that they are separated by placing D before C. Finally, E must be in the last position. Arranging everything while following these rules gives us ['A', 'B', 'F', 'G', 'D', 'C', 'H', 'E']."
       },
+      {
+        "level": "Hard",
+        "id": "3",
+        "question": "Arrange according to given constraints",
+        "inputs": ["A", "B", "C", "D", "E", "F", "G", "H"],
+        "constraints": [
+          "C and D must sit together",
+          "A cannot be next to E",
+          "B must be in the first position",
+          "G must be in the last position"
+        ],
+        "output": ["B", "A", "C", "D", "F", "E", "H", "G"],
+        "solution": ["B", "A", "C", "D", "F", "E", "H", "G"],
+        "explanation": "We begin by placing B at the first position as required. C and D must be together, so we position them next to each other. A cannot be next to E, so we ensure a gap between them by placing F between D and E. Finally, G must be at the last position. This arrangement satisfies all constraints: ['B', 'A', 'C', 'D', 'F', 'E', 'H', 'G']."
+      }
+      
+      
     ]
     
   },
- {
-      category: "Group",
-      questions: [
-        {
-          level: "Medium",
-          id: 1,
-          question: "Divide 9 people (A, B, C, D, E, F, G, H, I) into 3 groups such that A and B are in the same group, and C and D are not in the same group.",
-          inputs: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
-          constraints: [
-            "A and B in the same group",
-            "C and D not in the same group",
-          ],
-          options: ["Dynamic"], // Options are dynamic because this is a grouping question
-          output: {
-            group1: ["A", "B", "E"],
-            group2: ["C", "F", "G"],
-            group3: ["D", "H", "I"],
-          },
-          solution: {
-            group1: ["A", "B", "E"],
-            group2: ["C", "F", "G"],
-            group3: ["D", "H", "I"],
-          },
-          explanation: "A and B must be in the same group, so we place them together in Group 1. To satisfy the condition that C and D are not in the same group, we place C in Group 2 and D in Group 3. The remaining people are distributed to balance the groups.",
+  {
+    category: "Group",
+    questions: [
+      
+      {
+        "level": "Medium",
+        "id": 1,
+        "question": "Divide 9 people (A, B, C, D, E, F, G, H, I) into 3 groups satisfying the constraints and decide their seating order in each group.",
+        "inputs": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+        "constraints": [
+          "A and B must be in the same group",
+          "D should be in Group 2",
+          "H should be in Group 3",
+          "F and G cannot be in the same group",
+          "C should not be in Group 1",
+          "A must be seated before B in their group",
+          "E must be the last in Group 1",
+          "F must be seated before C in Group 2",
+          "I must be seated before H in Group 3"
+        ],
+        "output": {
+          "group1": ["A", "B", "E"],
+          "group2": ["D", "F", "C"],
+          "group3": ["I", "H", "G"]
         },
-        {
-          level: "Hard",
-          id: 2,
-          question: "Divide 9 people (A, B, C, D, E, F, G, H, I) into 3 groups such that E is in a different group from both F and G, and H and I must be in the same group.",
-          inputs: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
-          constraints: [
-            "E not in the same group as F and G",
-            "H and I in the same group",
-          ],
-          options: ["Dynamic"],
-          output: {
-            group1: ["E", "A", "B"],
-            group2: ["F", "G", "C"],
-            group3: ["H", "I", "D"],
-          },
-          solution: {
-            group1: ["E", "A", "B"],
-            group2: ["F", "G", "C"],
-            group3: ["H", "I", "D"],
-          },
-          explanation: "E must be in a group separate from both F and G, so we place E in Group 1 and F and G in Group 2. H and I must be in the same group, so we place them together in Group 3. The remaining people are distributed to balance the groups.",
+        "solution": {
+          "group1": ["A", "B", "E"],
+          "group2": ["D", "F", "C"],
+          "group3": ["I", "H", "G"]
         },
-        {
-          level: "Hard",
-          id: 3,
-          question: "Divide 9 people (A, B, C, D, E, F, G, H, I) into 3 groups such that A, B, and C are all in different groups, and D and E must be together.",
-          inputs: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
-          constraints: [
-            "A, B, C in different groups",
-            "D and E in the same group",
-          ],
-          options: ["Dynamic"],
-          output: {
-            group1: ["A", "D", "E"],
-            group2: ["B", "F", "G"],
-            group3: ["C", "H", "I"],
-          },
-          solution: {
-            group1: ["A", "D", "E"],
-            group2: ["B", "F", "G"],
-            group3: ["C", "H", "I"],
-          },
-          explanation: "A, B, and C must be in different groups, so we place them in Groups 1, 2, and 3, respectively. D and E must be in the same group, so we place them together in Group 1. The remaining people are distributed to balance the groups.",
+        "explanation": "A is placed before B in Group 1, with E as the last. D is placed in Group 2, and F is seated before C. I is seated before H in Group 3, ensuring all constraints are met."
+      },
+      
+      
+      
+      {
+        "level": "Medium",
+        "id": 3,
+        "question": "Divide 9 people (A, B, C, D, E, F, G, H, I) into 3 groups satisfying the constraints and decide their seating order in each group.",
+        "inputs": ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+        "constraints": [
+          "E and F must be in the same group",
+          "B should be in Group 2",
+          "C and D cannot be in the same group",
+          "A should be in Group 1",
+          "H should not be in Group 3",
+          "A must be seated before G in Group 1",
+          "E must be the first in Group 2",
+          "D must be seated before H in Group 3",
+          "B must be seated before F in Group 2"
+        ],
+        "output": {
+          "group1": ["A", "G", "C"],
+          "group2": ["E", "B", "F"],
+          "group3": ["D", "H", "I"]
         },
-      ],
-    }
+        "solution": {
+          "group1": ["A", "G", "C"],
+          "group2": ["E", "B", "F"],
+          "group3": ["D", "H", "I"]
+        },
+        "explanation": "A is placed before G in Group 1. E is the first in Group 2, and B is seated before F. D is seated before H in Group 3, ensuring all constraints are met."
+      }
+     
+    ],
+  },
+
+    
    
 
   

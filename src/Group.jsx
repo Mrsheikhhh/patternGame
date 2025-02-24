@@ -1,65 +1,70 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import './Group.css'; // Import the adapted CSS
+import { useParams, useNavigate } from 'react-router-dom';
+import './Group.css';
 import TopZone from './TopZone';
-import TableSide from './TableSide2'; // Reuse the TableSide component
-
+import TableSide from './TableSide2';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 export default function Group({ levels }) {
     const { questionIndex } = useParams();
     const navigate = useNavigate();
-    const [correct,setCorrect]=useState(false)
-    const [elements, setElements] = useState(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I']);
+    const [correct, setCorrect] = useState(false);
+    const initialElements = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+    
+    const [elements, setElements] = useState(initialElements);
     const [e, setE] = useState(elements);
 
+    // Store previous states for undo functionality
+    const [previousState, setPreviousState] = useState(null);
+
     const [tableSides, setTableSides] = useState({
-        one: Array(3).fill(null), // Table 1 sides
-        two: Array(3).fill(null), // Table 2 sides
-        three: Array(3).fill(null), // Table 3 sides
+        one: Array(3).fill(null),
+        two: Array(3).fill(null),
+        three: Array(3).fill(null),
     });
 
-    const selectedQuestion = levels[3]?.questions?.[questionIndex];
-        const [open, setOpen] = React.useState(false); // Modal starts closed
-        const handleOpen = () => setOpen(true);
-        const handleClose = () => setOpen(false);
+    const selectedQuestion = levels[2]?.questions?.[questionIndex];
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    useEffect(() => {
+        setE(elements);
+        setCorrect(false);
+        setOpen(false);
+    }, [questionIndex]);
+
+    // Function to reset tables
     const resetTables = () => {
-        setElements(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I']);
+        setElements(initialElements);
         setTableSides({
             one: Array(3).fill(null),
             two: Array(3).fill(null),
             three: Array(3).fill(null),
         });
     };
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-     
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: '#000220',
-        color:'white',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-      };
 
+    // Function to handle dropping an element onto a table
     const acceptDropToTableSide = (id, tableKey, sideIndex) => {
+        setPreviousState({ elements: e, tableSides }); // Save current state before updating
+
         setTableSides((prev) => {
             const updatedSides = { ...prev };
-            updatedSides[tableKey][sideIndex] = id; // Update the specific table and side
+            updatedSides[tableKey][sideIndex] = id;
             return updatedSides;
         });
 
-        setE((prev) => prev.filter((element) => element !== id)); // Remove the element from the TopZone
+        setE((prev) => prev.filter((element) => element !== id));
     };
 
+    // Function to handle dropping an element back to the TopZone
     const acceptDropToTop = (id) => {
+        setPreviousState({ elements: e, tableSides }); // Save current state before updating
+
         setE((prev) => (prev.includes(id) ? prev : [...prev, id]));
         setTableSides((prev) => {
             const updatedSides = { ...prev };
@@ -70,10 +75,26 @@ export default function Group({ levels }) {
         });
     };
 
-    const submitFunction = () => {
-        const correctOutput = selectedQuestion.output 
-        console.log(correctOutput)
+    // Undo function to revert to previous state
+    const undoLastAction = () => {
+        // Collect all elements from tableSides
+        const movedElements = Object.values(tableSides).flat().filter(Boolean);
+    
+        // Move them back to TopZone without duplicates
+        setE((prev) => [...new Set([...prev, ...movedElements])]);
+    
+        // Clear tableSides
+        setTableSides({
+            one: Array(3).fill(null),
+            two: Array(3).fill(null),
+            three: Array(3).fill(null),
+        });
+    };
+    
 
+    // Function to check the answer
+    const submitFunction = () => {
+        const correctOutput = selectedQuestion.output;
         const userOutput = {
             group1: tableSides.one,
             group2: tableSides.two,
@@ -87,17 +108,13 @@ export default function Group({ levels }) {
         );
 
         if (isCorrect) {
-          //  alert("You are right!");
-            setCorrect(true)
-            setOpen(true)
+            setCorrect(true);
+            setOpen(true);
         } else {
-           // alert("Your answer is incorrect. Try again.");
-            setOpen(true)
+            setOpen(true);
         }
     };
-useEffect(()=>{
- handleClose()
-},[])
+
     return (
         <div className="group-container">
             {selectedQuestion ? (
@@ -114,47 +131,28 @@ useEffect(()=>{
                         </ul>
                         <p><strong>Explanation:</strong> {selectedQuestion.explanation}</p>
                     </div>
-
-                    {e && e.length > 0 ? (
-                        <div className="topzone">
-                            <TopZone elements={e} acceptDrop={acceptDropToTop} />
-                        </div>
-                    ) : (
-                        <h4 style={{ textAlign: 'center' }}>kuch hai nai yaha</h4>
-                    )}
-                    <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style }}>
-          <Typography id="modal-modal-title" variant="h6" component="h2" style={{
-            textAlign:'center'
-          }}>
-            {correct?'Correct':'Wrong'}
-          </Typography>
-         {/*} <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Solution :{selectedQuestion.solution} 
-          </Typography>*/}
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Explanation :{selectedQuestion.explanation} 
-          </Typography>
-          <div style={{
-            display:'flex',
-            justifyContent:'space-between',
-            margin:'5px'
-          }}>
-          <button className='modelButton' onClick={() => navigate(`/category/2/question/${parseInt(questionIndex) + 1}`)}>
-            Next Question
-          </button>
-          <button className='modelButton' onClick={() => setOpen(false)}>
-            Try Again
-          </button>
-          </div>
-        </Box>
-      </Modal>
+                    <div className="topzone">
+                        {e.length > 0 ? <TopZone elements={e} acceptDrop={acceptDropToTop} /> : <h4 style={{ textAlign: 'center' }}>EMPTY</h4>}
+                    </div>
                     
+                    <Modal open={open} onClose={handleClose}>
+                        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: '#000220', color: 'white', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+                            <Typography variant="h6" component="h2" style={{ textAlign: 'center' }}>
+                                {correct ? 'Correct' : 'Wrong'}
+                            </Typography>
+                            <Typography sx={{ mt: 2 }}>
+                                Explanation: {selectedQuestion.explanation}
+                            </Typography>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '5px' }}>
+                                <button className='modelButton' onClick={() => navigate(`/category/2/question/${parseInt(questionIndex) + 1}`)}>
+                                    Next Question
+                                </button>
+                                <button className='modelButton' onClick={() => setOpen(false)}>
+                                    Try Again
+                                </button>
+                            </div>
+                        </Box>
+                    </Modal>
 
                     <div className="tables-section">
                         {Object.keys(tableSides).map((tableKey) => (
@@ -162,20 +160,10 @@ useEffect(()=>{
                                 <h4 className="table-title">Table {tableKey}</h4>
                                 <div className="table-options">
                                     <div className="rotating-image-container">
-                                        <img
-                                            src="/Picsart_25-01-21_21-06-42-331.png"
-                                            alt="Rotating Table"
-                                            className="rotating-image"
-                                        />
+                                        <img src="/Picsart_25-01-21_21-06-42-331.png" alt="Rotating Table" className="rotating-image" />
                                         <div className="tableoptions">
                                             {tableSides[tableKey].map((text, index) => (
-                                                <TableSide
-                                                    key={index}
-                                                    index={index}
-                                                    tableKey={tableKey} // Pass the table key
-                                                    currentText={text || 'nothing'}
-                                                    acceptDrop={(id) => acceptDropToTableSide(id, tableKey, index)} // Handle drop for specific table and side
-                                                />
+                                                <TableSide key={index} index={index} tableKey={tableKey} currentText={text || '-'} acceptDrop={(id) => acceptDropToTableSide(id, tableKey, index)} />
                                             ))}
                                         </div>
                                     </div>
@@ -185,8 +173,9 @@ useEffect(()=>{
                     </div>
 
                     <div className="buttons">
-                        <Button variant="contained" onClick={resetTables} className='modelButton'>
-                            Reset
+                      
+                        <Button variant="contained" onClick={undoLastAction} className='modelButton' disabled={!previousState}>
+                            Undo
                         </Button>
                         <Button variant="contained" onClick={submitFunction} className='modelButton'>
                             Submit

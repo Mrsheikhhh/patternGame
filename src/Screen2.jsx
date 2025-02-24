@@ -27,7 +27,8 @@ const Screen2 = ({ levels }) => {
  
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: '#000220',
+    background:'rgb(253,255,9)',
+background: 'linear-gradient(312deg, rgba(253,255,9,1) 0%, rgba(255,162,0,1) 48%)',
     color:'white',
     border: '2px solid #000',
     boxShadow: 24,
@@ -109,10 +110,16 @@ const Screen2 = ({ levels }) => {
                     justifyContent:'space-between',
                     margin:'5px'
                   }}>
-                  <button  onClick={() => navigate(`/category/0/question/${parseInt(questionIndex) + 1}`)}>
+                  <button  onClick={() => navigate(`/category/0/question/${parseInt(questionIndex) + 1}`)} style={{
+                        background: 'rgb(0,27,84)',
+                        background: 'linear-gradient(312deg, rgba(0,27,84,1) 0%, rgba(115,134,255,1) 100%)', /* Dark gray background */
+                  }}>
                     Next Question
                   </button>
-                  <button className='modelButton' onClick={() => setOpen(false)}>
+                  <button onClick={() => setOpen(false)} style={{
+                        background: 'rgb(0,27,84)',
+                        background: 'linear-gradient(312deg, rgba(0,27,84,1) 0%, rgba(115,134,255,1) 100%)', /* Dark gray background */
+                  }}>
                     Try Again
                   </button>
                   </div>
@@ -127,8 +134,9 @@ const Screen2 = ({ levels }) => {
           }}>
           <p>No questions available</p>
           <button style={{
-            backgroundColor:'#ffd700',
-            color:'wh9te'
+                background: 'rgb(0,27,84)',
+                background: 'linear-gradient(312deg, rgba(0,27,84,1) 0%, rgba(115,134,255,1) 100%)', /* Dark gray background */
+            color:'white'
           }} onClick={()=>navigate('/category/1/question/0')}>Move to medium</button>
           </div>
           </>
@@ -140,7 +148,7 @@ const Screen2 = ({ levels }) => {
             <img
               src="/Picsart_25-01-21_21-06-42-331.png"
               alt="Rotating Table"
-              className="rotating-image"
+              className="rotating-image-0"
             />
             </div>
    
